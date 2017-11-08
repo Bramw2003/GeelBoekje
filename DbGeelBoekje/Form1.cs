@@ -19,8 +19,8 @@ namespace DbGeelBoekje
         protected Point TB_LastPos_EN = new Point(10, 0);
         protected Point TB_LastPos_NL = new Point(350, 0);
 
-        public List<TextBox> TB_EN = new List<TextBox>();
-        public List<TextBox> TB_NL = new List<TextBox>();
+        public List<TextBox> TB_Left = new List<TextBox>();
+        public List<TextBox> TB_Right = new List<TextBox>();
         public List<string> NL = new List<string>();
         public List<string> EN = new List<string>();
 
@@ -29,7 +29,9 @@ namespace DbGeelBoekje
             DbInit();
             Add_EN_TB();
             Add_NL_TB();
-            Populate_EnTb(TB_EN);
+            Populate_EnTb(TB_Left);
+            Populate_NLTb(TB_Right);
+
         }
         private void Add_EN_TB()
         {
@@ -41,9 +43,9 @@ namespace DbGeelBoekje
                 tb.Visible = true;
                 tb.Text = i.ToString();
                 tb.Size = new Size(tb.Size.Width + 50, tb.Size.Height);
-                tb.Name = "Tb_EN_" + i.ToString();
+                tb.Name = "TB_Left_" + i.ToString();
                 tb.ReadOnly = true;
-                TB_EN.Add(tb);
+                TB_Left.Add(tb);
                 this.Controls.Add(tb);
             }
         }
@@ -58,8 +60,8 @@ namespace DbGeelBoekje
                 tb.Visible = true;
                 tb.Text = i.ToString();
                 tb.Size = new Size(tb.Size.Width + 50, tb.Size.Height);
-                tb.Name = "Tb_EN_" + i.ToString();
-                TB_NL.Add(tb);
+                tb.Name = "TB_Left_" + i.ToString();
+                TB_Right.Add(tb);
                 this.Controls.Add(tb);
             }
         }
@@ -72,9 +74,17 @@ namespace DbGeelBoekje
             }
         }
 
+        private void Populate_NLTb(List<TextBox> LtB)
+        {
+            for (int i = 0; i < LtB.Count; i++)
+            {
+                LtB[i].Text = NL[i];
+            }
+        }
+
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            foreach (var item in TB_EN)
+            foreach (var item in TB_Left)
             {
                 item.Text = item.Name;
             }
@@ -96,15 +106,15 @@ namespace DbGeelBoekje
 
         private void button1_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < TB_EN.Count; i++)
+            for (int i = 0; i < TB_Left.Count; i++)
             {
-                if(TB_NL[i].Text == NL[i])
+                if(TB_Right[i].Text == NL[i])
                 {
-                    TB_NL[i].BackColor = Color.Green;
+                    TB_Right[i].BackColor = Color.Green;
                 }
                 else
                 {
-                    TB_NL[i].BackColor = Color.Red;
+                    TB_Right[i].BackColor = Color.Red;
                 }
             }
         }
