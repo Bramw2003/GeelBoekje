@@ -27,13 +27,13 @@ namespace DbGeelBoekje
         private void Form1_Load(object sender, EventArgs e)
         {
             DbInit();
-            Add_EN_TB();
-            Add_NL_TB();
-            Populate_EnTb(TB_Left);
-            Populate_NLTb(TB_Right);
-
+            Add_Left_TB();
+            Add_Right_TB();
+            Populate(TB_Left, EN);
+            Populate(TB_Right, NL);
         }
-        private void Add_EN_TB()
+
+        private void Add_Left_TB()
         {
             for (int i = 0; i < EN.Count; i++)
             {
@@ -49,8 +49,7 @@ namespace DbGeelBoekje
                 this.Controls.Add(tb);
             }
         }
-
-        private void Add_NL_TB()
+        private void Add_Right_TB()
         {
             for (int i = 0; i < NL.Count; i++)
             {
@@ -66,19 +65,11 @@ namespace DbGeelBoekje
             }
         }
 
-        private void Populate_EnTb(List<TextBox> LtB)
+        private void Populate(List<TextBox> LtB, List<string> Language)
         {
             for (int i = 0; i < LtB.Count; i++)
             {
-                LtB[i].Text = EN[i];
-            }
-        }
-
-        private void Populate_NLTb(List<TextBox> LtB)
-        {
-            for (int i = 0; i < LtB.Count; i++)
-            {
-                LtB[i].Text = NL[i];
+                LtB[i].Text = Language[i];
             }
         }
 
@@ -106,15 +97,25 @@ namespace DbGeelBoekje
 
         private void button1_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < TB_Left.Count; i++)
+            Check(TB_Left, TB_Right);
+        }
+
+        /// <summary>
+        /// Check the answers
+        /// </summary>
+        /// <param name="EN_tb"></param>
+        /// <param name="NL_tb"></param>
+        private void Check(List<TextBox> EN_tb, List<TextBox> NL_tb)
+        {
+            for (int i = 0; i < EN_tb.Count; i++)
             {
-                if(TB_Right[i].Text == NL[i])
+                if(NL_tb[i].Text == NL[i])
                 {
-                    TB_Right[i].BackColor = Color.Green;
+                    NL_tb[i].BackColor = Color.Green;
                 }
                 else
                 {
-                    TB_Right[i].BackColor = Color.Red;
+                    NL_tb[i].BackColor = Color.Red;
                 }
             }
         }
