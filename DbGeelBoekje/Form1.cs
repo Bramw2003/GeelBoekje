@@ -17,7 +17,7 @@ namespace DbGeelBoekje
             InitializeComponent();
         }
         protected Point TB_LastPos_EN = new Point(10, 0);
-        protected Point TB_LastPos_NL = new Point(350, 0);
+        protected Point TB_LastPos_NL = new Point(200, 0);
 
         public List<TextBox> TB_Left = new List<TextBox>();
         public List<TextBox> TB_Right = new List<TextBox>();
@@ -46,7 +46,7 @@ namespace DbGeelBoekje
                 tb.Name = "TB_Left_" + i.ToString();
                 tb.ReadOnly = true;
                 TB_Left.Add(tb);
-                this.Controls.Add(tb);
+                Panel_Full.Controls.Add(tb);
             }
         }
         private void Add_Right_TB()
@@ -58,11 +58,17 @@ namespace DbGeelBoekje
                 tb.Location = TB_LastPos_NL;
                 tb.Visible = true;
                 tb.Text = i.ToString();
+                tb.TextChanged += Tb_TextChanged; //Never put this in front of tb.Text = i.ToString; it will produce errors we don't want
                 tb.Size = new Size(tb.Size.Width + 50, tb.Size.Height);
-                tb.Name = "TB_Left_" + i.ToString();
+                tb.Name = "TB_Right_" + i.ToString();
                 TB_Right.Add(tb);
-                this.Controls.Add(tb);
+                Panel_Full.Controls.Add(tb);
             }
+        }
+
+        private void Tb_TextChanged(object sender, EventArgs e)
+        {
+            Check(TB_Left, TB_Right);
         }
 
         private void Populate(List<TextBox> LtB, List<string> Language)
@@ -103,10 +109,12 @@ namespace DbGeelBoekje
         /// <summary>
         /// Check the answers
         /// </summary>
-        /// <param name="EN_tb"></param>
-        /// <param name="NL_tb"></param>
+        /// <param name="EN_tb">List of TextBox with English text</param>
+        /// <param name="NL_tb">List of TextBox with Dutch text</param>
         private void Check(List<TextBox> EN_tb, List<TextBox> NL_tb)
         {
+            Console.WriteLine(NL.Count);
+
             for (int i = 0; i < EN_tb.Count; i++)
             {
                 if(NL_tb[i].Text == NL[i])
